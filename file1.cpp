@@ -22,3 +22,37 @@ int main(){
     }
     for(int i=1;i<=n;++i) cout<<ans[i]<<' ';
 }
+
+
+/**
+// find number no of different substrings in string s in O(n*n)
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,kmp[200005];
+string s,t,tmp;
+int ans;
+int main(){
+    ios::sync_with_stdio(0);cin.tie(0);
+    cin>>s;
+    n=s.length();
+    for(int i=0;i<n;++i){
+        tmp.push_back(s[i]);
+        t=tmp;
+        reverse(t.begin(), t.end());
+        int mx=0;
+        for(int j=1;j<t.length();++j){
+            int k=kmp[j-1];
+            while(k && t[j]!=t[k]) k=kmp[k-1];
+            if(t[j]==t[k]) ++k;
+            kmp[j]=k;
+            mx=max(mx,k);
+        }
+        ans+=t.length()-mx;
+    }
+    cout<<ans;
+}
+
+
+
+
+**/
