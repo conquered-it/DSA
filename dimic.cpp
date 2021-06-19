@@ -119,3 +119,98 @@ int main() {
     dinic();
     cout<<flow<<endl;
 }
+
+
+
+/*
+
+more accurate
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll int64_t
+const ll M = 4000;
+#define ld long double
+const int N = 200500;
+ 
+using namespace std;
+ 
+struct edge
+{
+    int a, b, cap, flow;
+};
+ 
+int n,src,sink,x,y,w,m,X,d[N],pt[N];
+vector<edge> e;
+vector<int> g[N];
+vector<vector<int>>EDGES;
+ 
+void add_edge(int a, int b, int cap)
+{
+    edge e1 = { a, b, cap, 0 };
+    edge e2 = { b, a, 0, 0 };
+    g[a].push_back(e.size());
+    e.push_back(e1);
+    g[b].push_back(e.size());
+    e.push_back(e2);
+}
+ 
+bool bfs()
+{
+    for (int i=0;i<=n;++i) d[i]=-1;
+    d[src]=0;
+    queue<int>qu;
+    qu.push(src);
+    while (qu.size())
+    {
+        int v=qu.front();
+        qu.pop();
+        for (int i=0;i<g[v].size();++i)
+        {
+            int id=g[v][i];
+            int to=e[id].b;
+            if (d[to]==-1 && e[id].flow<e[id].cap)
+            {
+                d[to]=d[v]+1;
+                qu.push(to);
+            }
+        }
+    }
+    return d[sink]!=-1;
+}
+ 
+int dfs(int v, int flow)
+{
+    if (v==sink || flow==0) return flow;
+    for (;pt[v]<g[v].size();++pt[v])
+    {
+        int id = g[v][pt[v]],to = e[id].b;
+        if (d[to]!=d[v]+1) continue;
+        int pushed=dfs(to,min(flow, e[id].cap-e[id].flow));
+        if (pushed){
+            e[id].flow+=pushed;
+            e[id^1].flow-=pushed;
+            return pushed;
+        }
+    }
+    return 0;
+}
+ 
+int dinic()
+{
+    int flow = 0;
+    while (1)
+    {
+        if(!bfs()) break;
+        for (int i=0;i<=n;++i) pt[i]=0;
+        while (1)
+        {
+            int pushed = dfs(src, 10000);
+            if (!pushed)
+                break;
+            flow += pushed;
+        }
+    }
+    return flow;
+}
+*/
